@@ -2,6 +2,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
+import vercel from "@astrojs/vercel";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -31,4 +33,6 @@ export default defineConfig({
       customCss: ["./src/styles/theme.css"],
     }),
   ],
+
+  adapter: vercel(),
 });
