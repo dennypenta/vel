@@ -1,0 +1,81 @@
+---
+title: vel
+description: A type-safe Go HTTP framework with automatic OpenAPI generation and client code generation.
+template: splash
+hero:
+  tagline: Type-safe Go HTTP framework with automatic OpenAPI generation and client code generation
+  image:
+    file: ../../../public/favicon.svg
+  actions:
+    - text: Getting Started
+      link: /guides/example/
+      icon: right-arrow
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why vel?
+
+vel is a modern Go HTTP framework that leverages Go generics for compile-time type safety while automatically generating OpenAPI specifications and client code. Built on the standard `net/http` library, vel maintains full compatibility while providing a clean, opinionated API for building type-safe web services.
+
+<div class="hero-layout">
+  <div class="hero-content">
+    <h2>Quick Example</h2>
+    <p>Get started with vel in just a few lines of code. Create type-safe HTTP handlers with automatic request/response marshaling and OpenAPI generation.</p>
+  </div>
+  <div class="hero-code">
+    <div class="code-block-container">
+
+```go
+package main
+
+import (
+	"context"
+	"net/http"
+
+	"github.com/dennypenta/vel"
+)
+
+type HelloRequest struct {
+	Name string `json:"name"`
+}
+
+type HelloResponse struct {
+	Message string `json:"message"`
+}
+
+func HelloHandler(ctx context.Context, req HelloRequest) (HelloResponse, *vel.Error) {
+	return HelloResponse{
+		Message: "Hello, " + req.Name,
+	}, nil
+}
+
+func main() {
+	router := vel.NewRouter()
+	vel.RegisterPost(router, "hello", HelloHandler)
+
+	http.ListenAndServe(":8080", router.Mux())
+}
+```
+
+    </div>
+  </div>
+</div>
+
+## Key Features
+
+<div>
+	<Card title="Type Safety" icon="star">
+		Leverage Go generics for compile-time type safety in your HTTP handlers with automatic request/response marshaling.
+	</Card>
+	<Card title="OpenAPI Generation" icon="document">
+		Automatically generate OpenAPI 3.0 specifications from your handler implementations - no manual documentation needed.
+	</Card>
+	<Card title="Client Generation" icon="rocket">
+		Generate type-safe clients for Go and TypeScript from your API definitions with a single command.
+	</Card>
+	<Card title="Standard Library" icon="puzzle">
+		Built on Go's standard `net/http` library - no custom abstractions, full compatibility maintained.
+	</Card>
+</div>
+
