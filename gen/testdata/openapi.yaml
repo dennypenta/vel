@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /test1:
+    post:
+      operationId: test1
+      description: Test endpoint with headers
+      parameters:
+        - name: X-API-Key
+          in: header
+          description: API key for authentication
+          required: true
+          schema:
+            type: string
+          example: treenq_12341234
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestTypeNoJsonTags"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TestTypeNoJsonTags"
+          headers:
+            X-Rate-Limit:
+              description: Rate limit remaining
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 3
+                enum:
+                  - "1"
+                  - "2"
+                  - "3"
+        "400":
+          description: meaningful text
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - ERRPR_CODE
+                  message:
+                    type: string
+                  meta:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                        minLength: 1
+                        maxLength: 300
+                required:
+                  - code
+  /test2:
+    post:
+      operationId: test2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TestTypeNestedTypes"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TestTypeNestedTypes"
+  /testEmpty:
+    post:
+      operationId: testEmpty
+      responses:
+        "200":
+          description: Success
+  /testGet:
+    get:
+      operationId: testGet
+      parameters:
+        - name: value
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: field
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetResp"
+  /testTime:
+    post:
+      operationId: testTime
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeTestRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeTestResponse"
+components:
+  schemas:
+    GetQuery:
+      type: object
+      properties:
+        Field:
+          type: integer
+        Value:
+          type: string
+      required:
+        - Value
+        - Field
+    GetResp:
+      type: object
+      properties:
+        Getting:
+          type: integer
+      required:
+        - Getting
+    HighElem:
+      type: object
+      properties:
+        int:
+          type: integer
+      required:
+        - int
+    HighMapElem:
+      type: object
+      properties:
+        Value:
+          type: string
+      required:
+        - Value
+    HighPointer:
+      type: object
+      properties:
+        extra:
+          type: string
+      required:
+        - extra
+    MapValue:
+      type: object
+      properties:
+        Value:
+          type: string
+      required:
+        - Value
+    TestNextLevelElem:
+      type: object
+      properties:
+        int:
+          type: integer
+      required:
+        - int
+    TestNextLevelStruct:
+      type: object
+      properties:
+        extra:
+          type: string
+      required:
+        - extra
+    TestNextLevelStructP:
+      type: object
+      properties:
+        extra:
+          type: string
+      required:
+        - extra
+    TestStruct:
+      type: object
+      properties:
+        line:
+          type: string
+        map:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/MapValue"
+        next:
+          $ref: "#/components/schemas/TestNextLevelStruct"
+        nextP:
+          $ref: "#/components/schemas/TestNextLevelStructP"
+        row:
+          type: integer
+        slice:
+          type: array
+          items:
+            $ref: "#/components/schemas/TestNextLevelElem"
+      required:
+        - row
+        - line
+        - next
+        - slice
+        - map
+    TestTypeNestedTypes:
+      type: object
+      properties:
+        chunk:
+          type: array
+          items:
+            type: integer
+        data:
+          $ref: "#/components/schemas/TestStruct"
+        map:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/HighMapElem"
+        nextP:
+          $ref: "#/components/schemas/HighPointer"
+        slice:
+          type: array
+          items:
+            $ref: "#/components/schemas/HighElem"
+      required:
+        - data
+        - chunk
+        - slice
+        - map
+    TestTypeNoJsonTags:
+      type: object
+      properties:
+        Value:
+          type: string
+      required:
+        - Value
+    TimeTestRequest:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+      required:
+        - createdAt
+        - name
+    TimeTestResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        processedAt:
+          type: string
+          format: date-time
+      required:
+        - processedAt
+        - id
