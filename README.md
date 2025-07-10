@@ -39,7 +39,7 @@ func HelloHandler(ctx context.Context, req HelloRequest) (HelloResponse, *vel.Er
 
 func main() {
 	router := vel.NewRouter()
-	vel.RegisterPost(router, "/hello", HelloHandler)
+	vel.RegisterPost(router, "hello", HelloHandler)
 
 	http.ListenAndServe(":8080", router.Mux())
 }
