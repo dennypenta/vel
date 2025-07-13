@@ -143,3 +143,34 @@ func MyHandler(ctx context.Context, req MyRequest) (MyResponse, *vel.Error) {
     return MyResponse{}, nil
 }
 ```
+
+## Standard net/http handlers
+
+You have 2 options to register a standard handler:
+
+- Register using native router as is
+- Register using provided API
+
+### Register using native router
+
+To achieve it vel exposes mux Rotuer which you can use
+
+```go
+	vel.NewRouter().Mux().Handle("POST /auth", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+```
+
+### Register using vel API
+
+vel provides the API to register a standard handler and describe all the necessary meta information and data types for documentation purpose
+
+```go
+	vel.RegisterHandlerFunc(router, vel.HandlerMeta{
+		Input:       struct{}{},
+		Output:      domain.GithubCallbackResponse{},
+		Method:      "GET",
+		OperationID: "auth",
+        Spec: vel.Spec{
+			Description: "auth handler",
+		},
+	}, handlers.GithubAuthHandler)
+```
