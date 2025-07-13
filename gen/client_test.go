@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/dennypenta/vel"
-	"github.com/dennypenta/vel/openapi"
 )
 
 //go:embed testdata/test.go
@@ -166,45 +165,65 @@ func TestGenOpenAPI(t *testing.T) {
 		PackageName: "client",
 	}, []vel.HandlerMeta{
 		{
-			Input: TestTypeNoJsonTags{}, Output: TestTypeNoJsonTags{}, OperationID: "test1", Method: "POST", Spec: openapi.Spec{
+			Input: TestTypeNoJsonTags{}, Output: TestTypeNoJsonTags{}, OperationID: "test1", Method: "POST", Spec: vel.Spec{
 				Description: "Test endpoint with headers",
-				RequestHeaders: openapi.KeyValueSpec{
+				RequestHeaders: vel.KeyValueSpec{
 					Key:          "X-API-Key",
-					ValueType:    openapi.String,
+					ValueType:    vel.String,
 					Description:  "API key for authentication",
 					ValueExample: "treenq_12341234",
-					Validation: openapi.Validation{
+					Validation: vel.Validation{
 						Required: true,
 					},
 				},
-				ResponseHeaders: openapi.KeyValueSpec{
+				ResponseHeaders: vel.KeyValueSpec{
 					Key:         "X-Rate-Limit",
-					ValueType:   openapi.Int,
+					ValueType:   vel.Int,
 					Description: "Rate limit remaining",
-					Validation: openapi.Validation{
+					Validation: vel.Validation{
 						Required: false,
 						MinValue: 1,
 						MaxValue: 3,
 						Enum:     []string{"1", "2", "3"},
 					},
 				},
-				Errors: []openapi.ErrorSpec{
-					{
-						Code:        "ERRPR_CODE",
+				Errors: map[int][]vel.ErrorSpec{
+					400: {{
+						Code:        "ERROR_CODE",
 						Description: "meaningful text",
-						Meta: []openapi.KeyValueSpec{
+						Meta: []vel.KeyValueSpec{
 							{
 								Key:         "field",
-								ValueType:   openapi.String,
+								ValueType:   vel.String,
 								Description: "some field",
-								Validation: openapi.Validation{
+								Validation: vel.Validation{
 									Required: false,
 									MinLen:   1,
 									MaxLen:   300,
 								},
 							},
 						},
-					},
+					}, {
+						Code:        "ANOTHER_CODE",
+						Description: "some text",
+						Meta:        []vel.KeyValueSpec{},
+					}},
+					450: {{
+						Code:        "ERROR_CODE_450",
+						Description: "meaningful text",
+						Meta: []vel.KeyValueSpec{
+							{
+								Key:         "field",
+								ValueType:   vel.String,
+								Description: "some field",
+								Validation: vel.Validation{
+									Required: false,
+									MinLen:   1,
+									MaxLen:   300,
+								},
+							},
+						},
+					}},
 				},
 			},
 		},

@@ -17,7 +17,7 @@ type Spec struct {
 	Description     string
 	RequestHeaders  KeyValueSpec
 	ResponseHeaders KeyValueSpec
-	Errors          []ErrorSpec
+	Errors          map[int][]ErrorSpec
 }
 
 type ErrorSpec struct {

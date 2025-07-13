@@ -39,7 +39,10 @@ paths:
                   - "2"
                   - "3"
         "400":
-          description: meaningful text
+          description: |-
+            Error codes:
+              * `ERROR_CODE` - meaningful text
+              * `ANOTHER_CODE` - some text
           content:
             application/json:
               schema:
@@ -48,7 +51,8 @@ paths:
                   code:
                     type: string
                     enum:
-                      - ERRPR_CODE
+                      - ERROR_CODE
+                      - ANOTHER_CODE
                   message:
                     type: string
                   meta:
@@ -58,6 +62,32 @@ paths:
                         type: string
                         minLength: 1
                         maxLength: 300
+                        description: some field
+                required:
+                  - code
+        "450":
+          description: |-
+            Error codes:
+              * `ERROR_CODE_450` - meaningful text
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    enum:
+                      - ERROR_CODE_450
+                  message:
+                    type: string
+                  meta:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                        minLength: 1
+                        maxLength: 300
+                        description: some field
                 required:
                   - code
   /test2:

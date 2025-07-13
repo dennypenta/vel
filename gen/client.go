@@ -360,6 +360,7 @@ type OpenAPISchema struct {
 	Format               string                    `yaml:"format,omitempty"`
 	MinLength            *int                      `yaml:"minLength,omitempty"`
 	MaxLength            *int                      `yaml:"maxLength,omitempty"`
+	Description          string                    `yaml:"description,omitempty"`
 	Minimum              *int                      `yaml:"minimum,omitempty"`
 	Maximum              *int                      `yaml:"maximum,omitempty"`
 	Enum                 []string                  `yaml:"enum,omitempty"`
@@ -656,16 +657,32 @@ func (g *ClientGen) specToErrorResponses(spec vel.Spec) map[string]*OpenAPIRespo
 		return nil
 	}
 
-	// Collect all error codes for the enum
-	errorCodes := make([]string, 0, len(spec.Errors))
-	for _, errorSpec := range spec.Errors {
-		errorCodes = append(errorCodes, errorSpec.Code)
-	}
-
 	responses := make(map[string]*OpenAPIResponse)
-	for _, errorSpec := range spec.Errors {
-		responses["400"] = &OpenAPIResponse{
-			Description: errorSpec.Description,
+	for httpStatus, errorSpecs := range spec.Errors {
+		errorCodes := make([]string, 0, len(errorSpecs))
+		descriptions := make([]string, 0, len(errorSpecs))
+		
+		// Collect all meta properties from all error specs for this status
+		allMetaProperties := make(map[string]*OpenAPISchema)
+		
+		for _, errorSpec := range errorSpecs {
+			errorCodes = append(errorCodes, errorSpec.Code)
+			descriptions = append(descriptions, fmt.Sprintf("* `%s` - %s", errorSpec.Code, errorSpec.Description))
+			
+			// Merge meta properties
+			metaProps := g.errorMetaToProperties(errorSpec.Meta)
+			for key, value := range metaProps {
+				allMetaProperties[key] = value
+			}
+		}
+		
+		httpStatusStr := fmt.Sprintf("%d", httpStatus)
+		
+		// Create consolidated description
+		consolidatedDescription := "Error codes:\n  " + strings.Join(descriptions, "\n  ")
+		
+		responses[httpStatusStr] = &OpenAPIResponse{
+			Description: consolidatedDescription,
 			Content: &OpenAPIContent{
 				ApplicationJSON: &OpenAPIMediaType{
 					Schema: &OpenAPISchema{
@@ -680,7 +697,7 @@ func (g *ClientGen) specToErrorResponses(spec vel.Spec) map[string]*OpenAPIRespo
 							},
 							"meta": {
 								Type:       "object",
-								Properties: g.errorMetaToProperties(errorSpec.Meta),
+								Properties: allMetaProperties,
 							},
 						},
 						Required: []string{"code"},
@@ -688,8 +705,6 @@ func (g *ClientGen) specToErrorResponses(spec vel.Spec) map[string]*OpenAPIRespo
 				},
 			},
 		}
-		// Only handle the first error for now
-		break
 	}
 
 	return responses
@@ -702,7 +717,48 @@ func (g *ClientGen) errorMetaToProperties(meta []vel.KeyValueSpec) map[string]*O
 
 	properties := make(map[string]*OpenAPISchema)
 	for _, m := range meta {
-		properties[m.Key] = g.primitiveTypeToSchemaWithValidation(m.ValueType, m.Validation)
+		schema := &OpenAPISchema{}
+
+		// Set type first
+		switch m.ValueType {
+		case vel.String:
+			schema.Type = "string"
+		case vel.Int:
+			schema.Type = "integer"
+		case vel.Uint:
+			schema.Type = "integer"
+		case vel.Float64:
+			schema.Type = "number"
+		case vel.Bool:
+			schema.Type = "boolean"
+		default:
+			schema.Type = "string"
+		}
+
+		// Add validation constraints first
+		if m.Validation.MinLen > 0 {
+			schema.MinLength = &m.Validation.MinLen
+		}
+		if m.Validation.MaxLen > 0 {
+			schema.MaxLength = &m.Validation.MaxLen
+		}
+		if m.Validation.MinValue > 0 {
+			schema.Minimum = &m.Validation.MinValue
+		}
+		if m.Validation.MaxValue > 0 {
+			max := int(m.Validation.MaxValue)
+			schema.Maximum = &max
+		}
+		if len(m.Validation.Enum) > 0 {
+			schema.Enum = m.Validation.Enum
+		}
+		
+		// Add description after all validation constraints
+		if m.Description != "" {
+			schema.Description = m.Description
+		}
+
+		properties[m.Key] = schema
 	}
 
 	return properties
