@@ -174,3 +174,42 @@ vel provides the API to register a standard handler and describe all the necessa
 		},
 	}, handlers.GithubAuthHandler)
 ```
+
+## Subrouters
+
+vel supports subrouters for organizing API endpoints with path prefixes. This is particularly useful for API versioning or grouping related endpoints.
+
+### Subrouter Features
+
+- **Shared ServeMux**: All subrouters share the same underlying `http.ServeMux`
+- **Middleware Inheritance**: Subrouters inherit middlewares from their parent router
+- **Independent Metadata**: Each subrouter maintains its own handler metadata for documentation
+
+### Creating Subrouters
+
+```go
+func setupVersionedAPI() *vel.Router {
+    router := vel.NewRouter()
+
+    // Global routes
+    vel.RegisterGet(router, "status", statusHandler)
+
+    // V1 API
+    v1 := router.Subrouter("/v1")
+    vel.RegisterPost(v1, "posts", createPostV1)
+    vel.RegisterGet(v1, "posts", getPostsV1)
+
+    // V2 API
+    v2 := router.Subrouter("/v2")
+    vel.RegisterPost(v2, "posts", createPostV2)
+    vel.RegisterGet(v2, "posts", getPostsV2)
+
+    return router
+}
+```
+
+This creates the following routes:
+
+- `GET /status` (global)
+- `POST /v1/posts`, `GET /v1/posts` (v1 API)
+- `POST /v2/posts`, `GET /v2/posts` (v2 API)

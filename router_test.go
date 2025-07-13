@@ -58,7 +58,7 @@ func TestRouterSubrouters(t *testing.T) {
 					return TestResponse{Reply: "ok"}, nil
 				})
 
-				v1 := r.Subrouter("/v1")
+				v1 := r.Subrouter("v1")
 				RegisterGet(v1, "users", func(ctx context.Context, req struct{}) (TestResponse, *Error) {
 					return TestResponse{Reply: "v1 users list"}, nil
 				})
@@ -79,7 +79,7 @@ func TestRouterSubrouters(t *testing.T) {
 			setup: func() *Router {
 				r := NewRouter()
 
-				v1 := r.Subrouter("/v1")
+				v1 := r.Subrouter("v1")
 				RegisterGet(v1, "users", func(ctx context.Context, req struct{}) (TestResponse, *Error) {
 					return TestResponse{Reply: "v1 users"}, nil
 				})
@@ -87,7 +87,7 @@ func TestRouterSubrouters(t *testing.T) {
 					return TestResponse{Reply: "v1 post: " + req.Message}, nil
 				})
 
-				v2 := r.Subrouter("/v2")
+				v2 := r.Subrouter("v2")
 				RegisterGet(v2, "users", func(ctx context.Context, req struct{}) (TestResponse, *Error) {
 					return TestResponse{Reply: "v2 users"}, nil
 				})
@@ -160,12 +160,12 @@ func TestSubrouterMetadata(t *testing.T) {
 		return struct{}{}, nil
 	})
 
-	v1 := r.Subrouter("/v1")
+	v1 := r.Subrouter("v1")
 	RegisterGet(v1, "users", func(ctx context.Context, req struct{}) (struct{}, *Error) {
 		return struct{}{}, nil
 	})
 
-	v2 := r.Subrouter("/v2")
+	v2 := r.Subrouter("v2")
 	RegisterPost(v2, "posts", func(ctx context.Context, req struct{}) (struct{}, *Error) {
 		return struct{}{}, nil
 	})
