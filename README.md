@@ -51,6 +51,10 @@ func main() {
 go get github.com/dennypenta/vel
 ```
 
+## Documentation
+
+https://vel-8u3w.onrender.com
+
 ## Development
 
 - **Build**: `go build -v ./...`
@@ -63,3 +67,10 @@ go get github.com/dennypenta/vel
 - **Simple**: Leverages Go's type system for safety
 - **Compatible**: Full net/http compatibility maintained
 - **Generated**: OpenAPI specs and clients generated from code
+
+# Backlogs
+
+- SSE code gen for clients and OpenAPI
+- Error codes code gen, from yaml generate the server constants and its mapping to http status, from the same file OpenAPI can be enriched to include the error codes
+- Extend possible Error types, to support not only the build-in one, but others
+- Custom clients templates to generate clients as you wish

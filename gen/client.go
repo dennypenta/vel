@@ -13,7 +13,6 @@ import (
 	"unicode"
 
 	"github.com/dennypenta/vel"
-	"github.com/dennypenta/vel/openapi"
 	"gopkg.in/yaml.v3"
 )
 
@@ -237,7 +236,7 @@ type ApiDesc struct {
 	Method      string
 	FuncName    string
 	DataTypes   []DataType
-	Spec        openapi.Spec
+	Spec        vel.Spec
 }
 
 type DataType struct {
@@ -574,7 +573,7 @@ func (g *ClientGen) fieldToSchema(field Field) *OpenAPISchema {
 	return g.typeNameToSchema(field.TypeName)
 }
 
-func (g *ClientGen) specToRequestHeaders(spec openapi.Spec) []*OpenAPIParameter {
+func (g *ClientGen) specToRequestHeaders(spec vel.Spec) []*OpenAPIParameter {
 	if spec.RequestHeaders.Key == "" {
 		return nil
 	}
@@ -594,7 +593,7 @@ func (g *ClientGen) specToRequestHeaders(spec openapi.Spec) []*OpenAPIParameter 
 	return []*OpenAPIParameter{param}
 }
 
-func (g *ClientGen) specToResponseHeaders(spec openapi.Spec) map[string]*OpenAPIHeader {
+func (g *ClientGen) specToResponseHeaders(spec vel.Spec) map[string]*OpenAPIHeader {
 	if spec.ResponseHeaders.Key == "" {
 		return nil
 	}
@@ -609,23 +608,23 @@ func (g *ClientGen) specToResponseHeaders(spec openapi.Spec) map[string]*OpenAPI
 	return headers
 }
 
-func (g *ClientGen) primitiveTypeToSchema(primitiveType openapi.PrimitiveType) *OpenAPISchema {
-	return g.primitiveTypeToSchemaWithValidation(primitiveType, openapi.Validation{})
+func (g *ClientGen) primitiveTypeToSchema(primitiveType vel.PrimitiveType) *OpenAPISchema {
+	return g.primitiveTypeToSchemaWithValidation(primitiveType, vel.Validation{})
 }
 
-func (g *ClientGen) primitiveTypeToSchemaWithValidation(primitiveType openapi.PrimitiveType, validation openapi.Validation) *OpenAPISchema {
+func (g *ClientGen) primitiveTypeToSchemaWithValidation(primitiveType vel.PrimitiveType, validation vel.Validation) *OpenAPISchema {
 	schema := &OpenAPISchema{}
 
 	switch primitiveType {
-	case openapi.String:
+	case vel.String:
 		schema.Type = "string"
-	case openapi.Int:
+	case vel.Int:
 		schema.Type = "integer"
-	case openapi.Uint:
+	case vel.Uint:
 		schema.Type = "integer"
-	case openapi.Float64:
+	case vel.Float64:
 		schema.Type = "number"
-	case openapi.Bool:
+	case vel.Bool:
 		schema.Type = "boolean"
 	default:
 		schema.Type = "string"
@@ -652,7 +651,7 @@ func (g *ClientGen) primitiveTypeToSchemaWithValidation(primitiveType openapi.Pr
 	return schema
 }
 
-func (g *ClientGen) specToErrorResponses(spec openapi.Spec) map[string]*OpenAPIResponse {
+func (g *ClientGen) specToErrorResponses(spec vel.Spec) map[string]*OpenAPIResponse {
 	if len(spec.Errors) == 0 {
 		return nil
 	}
@@ -665,7 +664,6 @@ func (g *ClientGen) specToErrorResponses(spec openapi.Spec) map[string]*OpenAPIR
 
 	responses := make(map[string]*OpenAPIResponse)
 	for _, errorSpec := range spec.Errors {
-		// Use a generic 400 status for all errors, or you could map specific codes to statuses
 		responses["400"] = &OpenAPIResponse{
 			Description: errorSpec.Description,
 			Content: &OpenAPIContent{
@@ -697,7 +695,7 @@ func (g *ClientGen) specToErrorResponses(spec openapi.Spec) map[string]*OpenAPIR
 	return responses
 }
 
-func (g *ClientGen) errorMetaToProperties(meta []openapi.KeyValueSpec) map[string]*OpenAPISchema {
+func (g *ClientGen) errorMetaToProperties(meta []vel.KeyValueSpec) map[string]*OpenAPISchema {
 	if len(meta) == 0 {
 		return nil
 	}

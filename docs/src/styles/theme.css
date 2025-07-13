@@ -1,24 +1,24 @@
 :root {
-  --background: oklch(0.2223 0.0060 271.1393);
+  --background: oklch(0.2223 0.006 271.1393);
   --foreground: oklch(0.9551 0 0);
-  --card: oklch(0.1470 0.0040 49.2500);
+  --card: oklch(0.147 0.004 49.25);
   --card-foreground: oklch(0.9551 0 0);
   --popover: oklch(0.2568 0.0076 274.6528);
   --popover-foreground: oklch(0.9551 0 0);
   --primary: oklch(0.8615 0.1423 82.6625);
-  --primary-foreground: oklch(0.9870 0.0260 102.2120);
-  --secondary: oklch(0.8520 0.1990 91.9360);
+  --primary-foreground: oklch(0.987 0.026 102.212);
+  --secondary: oklch(0.852 0.199 91.936);
   --secondary-foreground: oklch(0.9551 0 0);
-  --muted: oklch(0.2940 0.0130 272.9312);
+  --muted: oklch(0.294 0.013 272.9312);
   --muted-foreground: oklch(0.7058 0 0);
-  --accent: oklch(0.3700 0.0130 285.8050);
-  --accent-foreground: oklch(0.8120 0.1940 13.4280);
-  --destructive: oklch(0.6370 0.2370 25.3310);
-  --destructive-foreground: oklch(1.0000 0 0);
+  --accent: oklch(0.37 0.013 285.805);
+  --accent-foreground: oklch(0.812 0.194 13.428);
+  --destructive: oklch(0.637 0.237 25.331);
+  --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.3289 0.0092 268.3843);
   --input: oklch(0.3289 0.0092 268.3843);
   --ring: oklch(0.6132 0.2294 291.7437);
-  --chart-1: oklch(0.8003 0.1821 151.7110);
+  --chart-1: oklch(0.8003 0.1821 151.711);
   --chart-2: oklch(0.6132 0.2294 291.7437);
   --chart-3: oklch(0.8077 0.1035 19.5706);
   --chart-4: oklch(0.6691 0.1569 260.1063);
@@ -26,8 +26,8 @@
   --sidebar: oklch(0.2011 0.0039 286.0396);
   --sidebar-foreground: oklch(0.9551 0 0);
   --sidebar-primary: oklch(0.6132 0.2294 291.7437);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.2940 0.0130 272.9312);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.294 0.013 272.9312);
   --sidebar-accent-foreground: oklch(0.6132 0.2294 291.7437);
   --sidebar-border: oklch(0.3289 0.0092 268.3843);
   --sidebar-ring: oklch(0.6132 0.2294 291.7437);
@@ -37,48 +37,52 @@
   --radius: 1.4rem;
   --shadow-2xs: 0px 2px 3px 0px hsl(0 0% 0% / 0.08);
   --shadow-xs: 0px 2px 3px 0px hsl(0 0% 0% / 0.08);
-  --shadow-sm: 0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 1px 2px -1px hsl(0 0% 0% / 0.16);
-  --shadow: 0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 1px 2px -1px hsl(0 0% 0% / 0.16);
-  --shadow-md: 0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 2px 4px -1px hsl(0 0% 0% / 0.16);
-  --shadow-lg: 0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 4px 6px -1px hsl(0 0% 0% / 0.16);
-  --shadow-xl: 0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 8px 10px -1px hsl(0 0% 0% / 0.16);
-  --shadow-2xl: 0px 2px 3px 0px hsl(0 0% 0% / 0.40);
+  --shadow-sm:
+    0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 1px 2px -1px hsl(0 0% 0% / 0.16);
+  --shadow:
+    0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 1px 2px -1px hsl(0 0% 0% / 0.16);
+  --shadow-md:
+    0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 2px 4px -1px hsl(0 0% 0% / 0.16);
+  --shadow-lg:
+    0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 4px 6px -1px hsl(0 0% 0% / 0.16);
+  --shadow-xl:
+    0px 2px 3px 0px hsl(0 0% 0% / 0.16), 0px 8px 10px -1px hsl(0 0% 0% / 0.16);
+  --shadow-2xl: 0px 2px 3px 0px hsl(0 0% 0% / 0.4);
 }
 
 :root {
-  --sl-color-accent: hsl(252, 56%, 57%);
-  --sl-color-accent-low: hsl(252, 14%, 84%);
-  --sl-color-accent-high: hsl(252, 56%, 45%);
+  --sl-color-accent: var(--primary);
+  --sl-color-accent-low: var(--secondary);
+  --sl-color-accent-high: var(--ring);
 
-  --sl-color-white: hsl(0, 0%, 100%);
-  --sl-color-gray-1: hsl(0, 0%, 97%);
-  --sl-color-gray-2: hsl(0, 0%, 93%);
-  --sl-color-gray-3: hsl(0, 0%, 88%);
-  --sl-color-gray-4: hsl(0, 0%, 73%);
-  --sl-color-gray-5: hsl(0, 0%, 44%);
-  --sl-color-gray-6: hsl(0, 0%, 23%);
-  --sl-color-black: hsl(0, 0%, 0%);
+  --sl-color-white: var(--foreground);
+  --sl-color-gray-1: var(--secondary);
+  --sl-color-gray-2: var(--muted-foreground);
+  --sl-color-gray-3: var(--secondary-foreground);
+  --sl-color-gray-4: var(--muted-foreground);
+  --sl-color-gray-5: var(--sidebar-accent);
+  --sl-color-gray-6: var(--card);
+  --sl-color-black: var(--card);
 
-  --sl-color-text: hsl(0, 0%, 0%);
-  --sl-color-text-accent: hsl(252, 56%, 57%);
-  --sl-color-text-invert: hsl(0, 0%, 100%);
+  --sl-color-text: var(--foreground);
+  --sl-color-text-accent: var(--primary);
+  --sl-color-text-invert: var(--muted);
 
-  --sl-color-bg: hsl(0, 0%, 100%);
-  --sl-color-bg-nav: hsl(0, 0%, 98%);
-  --sl-color-bg-sidebar: hsl(0, 0%, 98%);
-  --sl-color-bg-inline-code: hsl(0, 0%, 96%);
+  --sl-color-bg: var(--background);
+  --sl-color-bg-nav: var(--card);
+  --sl-color-bg-sidebar: var(--sidebar);
+  --sl-color-bg-inline-code: var(--input);
 
-  --sl-color-hairline: hsl(0, 0%, 93%);
-  --sl-color-hairline-light: hsl(0, 0%, 96%);
-  --sl-color-hairline-shade: hsl(0, 0%, 88%);
-
-  --sl-font-system: "Plus Jakarta Sans", system-ui, sans-serif;
-  --sl-font-system-mono: "IBM Plex Mono", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+  --sl-color-hairline: var(--accent);
+  --sl-color-hairline-light: var(--accent);
+  --sl-color-hairline-shade: var(--accent);
+    "IBM Plex Mono", Consolas, "Andale Mono WT", "Andale Mono",
+    "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono",
+    "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco,
+    "Courier New", Courier, monospace;
 }
 
-
-
-:root[data-theme='dark'] {
+:root[data-theme="dark"] {
   --sl-color-accent: var(--primary);
   --sl-color-accent-low: var(--secondary);
   --sl-color-accent-high: var(--ring);
@@ -105,295 +109,3 @@
   --sl-color-hairline-light: var(--accent);
   --sl-color-hairline-shade: var(--accent);
 }
-
-/* /* Custom layout styles for vel documentation */ */
-/* .hero-layout { */
-/*   display: grid; */
-/*   grid-template-columns: 1fr; */
-/*   gap: 2rem; */
-/*   align-items: start; */
-/*   max-width: 1200px; */
-/*   margin: 2rem auto; */
-/*   padding: 0 2rem; */
-/*   min-height: 400px; */
-/* } */
-/**/
-/* @media (min-width: 768px) { */
-/*   .hero-layout { */
-/*     grid-template-columns: 1fr 1fr; */
-/*     gap: 3rem; */
-/*   } */
-/* } */
-/**/
-/* .hero-content { */
-/*   order: 1; */
-/*   display: flex; */
-/*   flex-direction: column; */
-/*   gap: 1rem; */
-/* } */
-/**/
-/* .hero-code { */
-/*   order: 2; */
-/*   display: flex; */
-/*   align-items: stretch; */
-/* } */
-/**/
-/* @media (min-width: 768px) { */
-/*   .hero-content { */
-/*     order: 1; */
-/*   } */
-/**/
-/*   .hero-code { */
-/*     order: 2; */
-/*   } */
-/* } */
-/**/
-/* .code-block-container { */
-/*   background: var(--sl-color-bg-inline-code); */
-/*   border: 1px solid var(--sl-color-hairline); */
-/*   border-radius: 0.75rem; */
-/*   padding: 1.5rem; */
-/*   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); */
-/*   overflow: auto; */
-/* } */
-/**/
-/* .code-block-container pre { */
-/*   margin: 0 !important; */
-/*   font-size: 0.875rem; */
-/*   line-height: 1.5; */
-/*   font-family: var(--sl-font-system-mono); */
-/*   background: transparent !important; */
-/*   border: none !important; */
-/*   padding: 0 !important; */
-/* } */
-/**/
-/* .code-block-container code { */
-/*   background: transparent !important; */
-/*   color: var(--sl-color-text) !important; */
-/*   font-family: var(--sl-font-system-mono); */
-/* } */
-/**/
-/* .feature-grid { */
-/*   display: grid; */
-/*   grid-template-columns: repeat(2, 1fr); */
-/*   grid-template-rows: repeat(2, 1fr); */
-/*   gap: 1.5rem; */
-/*   margin: 3rem 0; */
-/*   align-items: stretch; */
-/* } */
-/**/
-/* @media (max-width: 768px) { */
-/*   .feature-grid { */
-/*     grid-template-columns: 1fr; */
-/*     grid-template-rows: auto; */
-/*   } */
-/* } */
-/**/
-/* .getting-started-grid { */
-/*   display: grid; */
-/*   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
-/*   gap: 1.5rem; */
-/*   margin: 2rem 0; */
-/* } */
-/**/
-/* /* Responsive adjustments */ */
-/* @media (max-width: 767px) { */
-/*   .hero-layout { */
-/*     grid-template-columns: 1fr; */
-/*     gap: 1.5rem; */
-/*   } */
-/**/
-/*   .hero-content { */
-/*     order: 1; */
-/*   } */
-/**/
-/*   .hero-code { */
-/*     order: 2; */
-/*   } */
-/**/
-/*   .code-block-container { */
-/*     padding: 1rem; */
-/*   } */
-/**/
-/*   .feature-grid { */
-/*     grid-template-columns: 1fr; */
-/*   } */
-/**/
-/*   .getting-started-grid { */
-/*     grid-template-columns: 1fr; */
-/*   } */
-/* } */
-/**/
-/* /* Ensure proper text visibility */ */
-/* .hero-content h2 { */
-/*   color: var(--sl-color-text) !important; */
-/*   font-family: var(--sl-font-system); */
-/*   font-weight: 600; */
-/* } */
-/**/
-/* .hero-content p { */
-/*   color: var(--sl-color-text) !important; */
-/*   font-family: var(--sl-font-system); */
-/*   opacity: 0.9; */
-/* } */
-/**/
-/* /* Override any low contrast text in hero */ */
-/* .hero h1, */
-/* .hero h2,  */
-/* .hero p, */
-/* .hero .tagline { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Make sure hero text is fully visible */ */
-/* :root[data-theme='dark'] .hero-content h2, */
-/* :root[data-theme='dark'] .hero-content p { */
-/*   color: hsl(0, 0%, 95%) !important; */
-/* } */
-/**/
-/* /* Also fix any grayed out text in general */ */
-/* .sl-markdown-content { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Fix main content area text */ */
-/* .content-panel { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Ensure all paragraphs are visible */ */
-/* p { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Fix any remaining low contrast elements */ */
-/* .sl-container h1, */
-/* .sl-container h2, */
-/* .sl-container h3, */
-/* .sl-container p { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Card styling fixes */ */
-/* .sl-card { */
-/*   background: var(--sl-color-bg) !important; */
-/*   color: var(--sl-color-text) !important; */
-/*   border: 1px solid var(--sl-color-hairline) !important; */
-/*   height: 100%; */
-/*   display: flex; */
-/*   flex-direction: column; */
-/*   align-items: stretch; */
-/*   justify-content: flex-start; */
-/*   padding: 1.5rem; */
-/* } */
-/**/
-/* .sl-card h3, */
-/* .sl-card h4, */
-/* .sl-card p, */
-/* .sl-card span, */
-/* .sl-card div { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Card content layout */ */
-/* .sl-card > *:first-child { */
-/*   margin-top: 0; */
-/* } */
-/**/
-/* .sl-card > *:last-child { */
-/*   margin-bottom: 0; */
-/* } */
-/**/
-/* .sl-card h3, */
-/* .sl-card h4 { */
-/*   margin-bottom: 0.75rem; */
-/*   line-height: 1.3; */
-/* } */
-/**/
-/* .sl-card p { */
-/*   line-height: 1.5; */
-/*   flex-grow: 1; */
-/* } */
-/**/
-/* /* Card hover effects */ */
-/* .sl-card:hover { */
-/*   transform: translateY(-2px); */
-/*   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); */
-/*   transition: all 0.2s ease; */
-/* } */
-/**/
-/* /* Specific overrides for Starlight card components */ */
-/* .card { */
-/*   background: var(--sl-color-bg) !important; */
-/*   color: var(--sl-color-text) !important; */
-/*   border: 1px solid var(--sl-color-hairline) !important; */
-/*   height: 100%; */
-/*   display: flex; */
-/*   flex-direction: column; */
-/*   align-items: stretch; */
-/*   justify-content: flex-start; */
-/*   padding: 1.5rem; */
-/* } */
-/**/
-/* .card h3, */
-/* .card h4, */
-/* .card p, */
-/* .card span, */
-/* .card div, */
-/* .card .title { */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-/**/
-/* /* Card content layout for regular cards */ */
-/* .card > *:first-child { */
-/*   margin-top: 0; */
-/* } */
-/**/
-/* .card > *:last-child { */
-/*   margin-bottom: 0; */
-/* } */
-/**/
-/* .card h3, */
-/* .card h4 { */
-/*   margin-bottom: 0.75rem; */
-/*   line-height: 1.3; */
-/* } */
-/**/
-/* .card p { */
-/*   line-height: 1.5; */
-/*   flex-grow: 1; */
-/* } */
-
-/* /* Additional card content styling */ */
-/* [astro-icon] { */
-/*   color: var(--sl-color-accent) !important; */
-/* } */
-/**/
-/* /* Ensure CardGrid components work properly */ */
-/* .not-content .sl-card, */
-/* .not-content .card { */
-/*   background: var(--sl-color-bg) !important; */
-/*   color: var(--sl-color-text) !important; */
-/* } */
-
-/* /* Dark mode specific card fixes */ */
-/* :root[data-theme='dark'] .sl-card, */
-/* :root[data-theme='dark'] .card { */
-/*   background: var(--sl-color-bg) !important; */
-/*   color: hsl(0, 0%, 95%) !important; */
-/*   border-color: var(--sl-color-hairline) !important; */
-/* } */
-/**/
-/* :root[data-theme='dark'] .sl-card *, */
-/* :root[data-theme='dark'] .card * { */
-/*   color: hsl(0, 0%, 95%) !important; */
-/* } */
-/**/
-/* /* Button styling improvements */ */
-/* .sl-link-button { */
-/*   transition: all 0.2s ease; */
-/* } */
-/**/
-/* .sl-link-button:hover { */
-/*   transform: translateY(-1px); */
-/* } */
