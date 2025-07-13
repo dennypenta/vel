@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"strings"
 	"unsafe"
 
 	"github.com/gorilla/schema"
@@ -100,8 +101,10 @@ func NewHandler[I, O any](call Handler[I, O]) http.HandlerFunc {
 }
 
 type Router struct {
-	mux         *http.ServeMux
-	middlewares []Middleware
+	mux             *http.ServeMux
+	middlewares     []Middleware
+	prefix          string
+	optionsPatterns map[string]bool
 
 	handlersMeta []HandlerMeta
 }
@@ -159,7 +162,24 @@ func NewRouter() *Router {
 		return struct{}{}, nil
 	}))
 
-	return &Router{mux: mux}
+	return &Router{
+		mux:             mux,
+		prefix:          "",
+		optionsPatterns: make(map[string]bool),
+	}
+}
+
+func (r *Router) Subrouter(prefix string) *Router {
+	if !strings.HasPrefix(prefix, "/") {
+		prefix = "/" + prefix
+	}
+	return &Router{
+		mux:             r.mux,
+		middlewares:     append([]Middleware{}, r.middlewares...),
+		prefix:          r.prefix + prefix,
+		optionsPatterns: r.optionsPatterns,
+		handlersMeta:    []HandlerMeta{},
+	}
 }
 
 type (
@@ -210,11 +230,18 @@ func RegisterHandler(r *Router, handler http.Handler, meta HandlerMeta, middlewa
 	}
 
 	r.handlersMeta = append(r.handlersMeta, meta)
-	pattern := meta.Method + " /" + meta.OperationID
+	path := r.prefix + "/" + meta.OperationID
+	if r.prefix == "" {
+		path = "/" + meta.OperationID
+	}
+	pattern := meta.Method + " " + path
 	r.mux.Handle(pattern, handler)
 	if !GlobalOpts.SkipOptionMethod {
-		pattern = http.MethodOptions + " /" + meta.OperationID
-		r.mux.Handle(pattern, handler)
+		optionsPattern := http.MethodOptions + " " + path
+		if !r.optionsPatterns[optionsPattern] {
+			r.mux.Handle(optionsPattern, handler)
+			r.optionsPatterns[optionsPattern] = true
+		}
 	}
 
 	return &r.handlersMeta[len(r.handlersMeta)-1]
