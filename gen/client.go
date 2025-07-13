@@ -661,26 +661,26 @@ func (g *ClientGen) specToErrorResponses(spec vel.Spec) map[string]*OpenAPIRespo
 	for httpStatus, errorSpecs := range spec.Errors {
 		errorCodes := make([]string, 0, len(errorSpecs))
 		descriptions := make([]string, 0, len(errorSpecs))
-		
+
 		// Collect all meta properties from all error specs for this status
 		allMetaProperties := make(map[string]*OpenAPISchema)
-		
+
 		for _, errorSpec := range errorSpecs {
 			errorCodes = append(errorCodes, errorSpec.Code)
 			descriptions = append(descriptions, fmt.Sprintf("* `%s` - %s", errorSpec.Code, errorSpec.Description))
-			
+
 			// Merge meta properties
 			metaProps := g.errorMetaToProperties(errorSpec.Meta)
 			for key, value := range metaProps {
 				allMetaProperties[key] = value
 			}
 		}
-		
+
 		httpStatusStr := fmt.Sprintf("%d", httpStatus)
-		
+
 		// Create consolidated description
 		consolidatedDescription := "Error codes:\n  " + strings.Join(descriptions, "\n  ")
-		
+
 		responses[httpStatusStr] = &OpenAPIResponse{
 			Description: consolidatedDescription,
 			Content: &OpenAPIContent{
@@ -752,7 +752,7 @@ func (g *ClientGen) errorMetaToProperties(meta []vel.KeyValueSpec) map[string]*O
 		if len(m.Validation.Enum) > 0 {
 			schema.Enum = m.Validation.Enum
 		}
-		
+
 		// Add description after all validation constraints
 		if m.Description != "" {
 			schema.Description = m.Description

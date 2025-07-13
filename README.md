@@ -57,9 +57,8 @@ https://vel-8u3w.onrender.com
 
 ## Development
 
-- **Build**: `go build -v ./...`
 - **Test**: `go test -v ./...`
-- **Format**: `go fmt ./...`
+- **Format**: `goimports -w .`
 
 ## Design Philosophy
 
@@ -68,7 +67,7 @@ https://vel-8u3w.onrender.com
 - **Compatible**: Full net/http compatibility maintained
 - **Generated**: OpenAPI specs and clients generated from code
 
-# Backlogs
+# Backlog
 
 - SSE code gen for clients and OpenAPI
 - Error codes code gen, from yaml generate the server constants and its mapping to http status, from the same file OpenAPI can be enriched to include the error codes
