@@ -27,6 +27,19 @@ func New{{ .Client.TypeName }}(baseUrl string, client *http.Client, headers map[
 	}
 }
 
+func (c *{{ .Client.TypeName }}) WithHeaders(headers map[string]string) *{{ .Client.TypeName }} {
+	hCopy := make(http.Header, len(c.headers) + len(headers))
+	maps.Copy(hCopy, c.headers)
+	for k, v := range headers {
+		hCopy.Set(k, v)
+	}
+	return &{{ .Client.TypeName }}{
+		client:  c.client,
+		baseUrl: c.baseUrl,
+		headers: hCopy,
+	}
+}
+
 type Error struct {
 	Code    string            `json:"code"`
 	Message string            `json:"message"`
